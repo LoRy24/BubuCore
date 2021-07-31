@@ -1,0 +1,12 @@
+# fly.use
+# rank.set
+# commandblocker.override
+
+Settings:
+  blocked_commands:
+    - me
+    - minecraft:me
+    - say
+    - minecraft:say
+    - tell
+    - minecraft:tell

@@ -1,0 +1,12 @@
+name: BubuCore
+version: ${project.version}
+main: org.bubumc.bubucore.BubuCore
+api-version: 1.17
+authors: [ LoRy24, GaMMy55, Kurimist ]
+commands:
+  fly:
+    description: Toggle the fly mode
+  setrank:
+    description: Set a rank to a player
+  setrankgui:
+    description: Open the set-rank gui
