@@ -2,7 +2,6 @@ package org.bubumc.bubucore.commands;
 
 import com.github.lory24.mcuitils.McGUI;
 import com.github.lory24.mcuitils.api.*;
-import com.github.lory24.mcuitils.api.animating.ItemAnimation;
 import com.github.lory24.mcuitils.utils.GuiLines;
 import org.bubumc.bubucore.BubuCore;
 import org.bukkit.Bukkit;
@@ -43,8 +42,8 @@ public class SetRankGUI implements CommandExecutor {
                 plugin.getRanksManager().loadRankType(args[0]).getS());
         setRankGUI.createButton(targetHead, 13, new GUIButtonEvents(() -> {}));
 
-        GUItem setRoleButton = new GUICustomItem(Material.STAINED_GLASS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,
-                1, true).setFlag(ItemFlag.HIDE_ENCHANTS).setLore("§7Imposta questo rank al giocatore "
+        GUItem setRoleButton = new GUICustomItem(Material.STAINED_GLASS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true)
+                .setFlag(ItemFlag.HIDE_ENCHANTS).setLore("§7Imposta questo rank al giocatore "
                 + args[0]);
 
         String[] names = {"§4Owner", "§cAdmin", "§2Mod",
@@ -57,10 +56,10 @@ public class SetRankGUI implements CommandExecutor {
             int finalI = i;
             setRankGUI.createButton(setRoleButton.setName("§fImposta ruolo: " + names[i]).setType(colors[i]), indexes[i],
                     new GUIButtonEvents(() -> {
-                        ((Player) sender).performCommand("setrank " + args[0]
-                                + " " + roles[finalI]);
-                        setRankGUI.createButton(targetHead.setLore("§7Rank: " + plugin.getRanksManager().loadRankType(
-                                args[0]).getS()), 13, new GUIButtonEvents(() -> {}));
+                        ((Player) sender).performCommand("setrank " + args[0] + " " + roles[finalI]);
+                        setRankGUI.createButton(targetHead.setLore("§7Rank: " + plugin.getRanksManager()
+                                        .loadRankType(args[0]).getS()), 13,
+                                new GUIButtonEvents(() -> {}));
                     }));
         }
 

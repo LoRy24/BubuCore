@@ -10,7 +10,7 @@ import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class GamesManager {
-    @Getter private final List<UHCQueueLobby> uhcQueues;
+    public final List<UHCQueueLobby> uhcQueues;
     private final BubuCore bubuCore;
 
     public GamesManager(BubuCore bubuCore) {

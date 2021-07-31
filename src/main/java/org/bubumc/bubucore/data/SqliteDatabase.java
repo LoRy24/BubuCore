@@ -15,23 +15,27 @@ import java.sql.Statement;
 public class SqliteDatabase {
     @Getter private final File file;
     private Connection connection;
+    @Getter private final SqlManager sqlManager;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public SqliteDatabase() {
         Plugin plugin = Bukkit.getPluginManager().getPlugin("BubuCore");
         file = new File(plugin.getDataFolder() + File.separator + "data.sqlite");
+        this.sqlManager = new SqlManager(this.getConnection());
         if (file.exists()) return;
         try {
             if (!plugin.getDataFolder().exists()) plugin.getDataFolder().mkdir();
             file.createNewFile();
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("SqlNoDataSourceInspection")
     public void setupDatabase() {
         try {
             Statement st = getConnection().createStatement();
-            st.execute("CREATE TABLE IF NOT EXISTS saved_ranks(PlayerNAME TEXT, RankTYPE TEXT)");
+            st.execute(SqlDefaultStrings.CREATE_SAVED_RANKS_TABLE.getSql());
             st.close();
         } catch (SQLException e) {
             e.printStackTrace();

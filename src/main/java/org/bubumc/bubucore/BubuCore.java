@@ -13,10 +13,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@SuppressWarnings({"SpellCheckingInspection", "CommentedOutCode"})
+@SuppressWarnings({"SpellCheckingInspection"})
 public final class BubuCore extends JavaPlugin {
 
-    public SqliteDatabase database;
+    @Getter public SqliteDatabase database;
     @Getter private RanksManager ranksManager;
     @Getter private ConfigValues configValues;
     @Getter private PermissionsManager permissionsManager;

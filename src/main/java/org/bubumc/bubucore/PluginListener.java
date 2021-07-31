@@ -47,5 +47,7 @@ public class PluginListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent event) {
         event.setQuitMessage("§7[§c-§7] §c" + event.getPlayer().getName());
+        plugin.getGamesManager().removePlayerFromHisQueue(
+                event.getPlayer());
     }
 }

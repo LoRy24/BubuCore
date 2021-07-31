@@ -24,12 +24,10 @@ public class PermissionsManager {
         this.permissions.put(player.getUniqueId(), attachment);
     }
 
-    public void setPermissionsToPlayer(Player player, ArrayList<String> permissions) {
-        if (!this.permissions.containsKey(player.getUniqueId()))
-            initAttachment(player);
-        PermissionAttachment a =
-                this.permissions.get(player.getUniqueId());
+    public void setPermissionsToPlayer(Player player, ArrayList<String> perms) {
+        if (!permissions.containsKey(player.getUniqueId())) initAttachment(player);
+        PermissionAttachment a = permissions.get(player.getUniqueId());
         a.getPermissions().forEach((key, value) -> a.unsetPermission(key));
-        permissions.forEach(s -> a.setPermission(s, true));
+        perms.forEach(s -> a.setPermission(s, true));
     }
 }

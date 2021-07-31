@@ -18,15 +18,8 @@ import java.util.List;
 public class RankCommand implements CommandExecutor, TabCompleter {
 
     @Override
-    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
-        List<String> onlinePlayers = new ArrayList<>();
-        for (Player p: Bukkit.getOnlinePlayers()) onlinePlayers.add(p.getName());
-        return args.length == 1 ? onlinePlayers : args.length == 2 ? new ArrayList<>(Arrays.asList("OWNER", "ADMIN", "MOD", "DEVELOPER",
-                "BUILDER", "BUBU", "MVP", "VIP", "USER")) : new ArrayList<>();
-    }
-
-    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
         BubuCore plugin = (BubuCore) Bukkit.getPluginManager().getPlugin("BubuCore");
 
         if (!sender.hasPermission("rank.set")) {
@@ -34,30 +27,42 @@ public class RankCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        if (!(args.length == 2)) { sender.sendMessage("§cSintassi del comando errata!"); return false; }
+        if (!(args.length == 2)) {
+            if (!plugin.getRanksManager().isSaved(args[0])) {
+                sender.sendMessage("§cGiocatore non trovato!");
+                return false;
+            }
 
-        if (!plugin.getRanksManager().isSaved(args[0])) {
-            sender.sendMessage("§cGiocatore non trovato!");
-            return false;
-        }
+            if (Arrays.stream(RankType.values()).noneMatch(s -> s.toString()
+                    .equals(args[1]))) {
+                sender.sendMessage("§cRank non trovato!");
+                return false;
+            }
 
-        if (Arrays.stream(RankType.values()).noneMatch(s -> s.toString()
-                .equals(args[1]))) {
-            sender.sendMessage("§cRank non trovato!");
-            return false;
-        }
+            Player player = Bukkit.getPlayerExact(args[0]);
 
-        Player player = Bukkit.getPlayerExact(args[0]);
-
-        sender.sendMessage("§aIl rank del giocatore " + args[0] + " è stato impostato a: " + args[1]);
-        if (player != null) {
-            plugin.getRanksManager().updateRankType(player, new Rank(RankType.valueOf(args[1])));
-            plugin.getPermissionsManager().setPermissionsToPlayer(player, plugin.getRanksManager().getRanks()
-                    .get(player).getRankPermissions().getPermissions());
+            sender.sendMessage("§aIl rank del giocatore " + args[0] + " è stato impostato a: " + args[1]);
+            if (player != null) {
+                plugin.getRanksManager().updateRankType(player, new Rank(RankType.valueOf(args[1])));
+                plugin.getPermissionsManager().setPermissionsToPlayer(player, plugin.getRanksManager().getRanks()
+                        .get(player).getRankPermissions().getPermissions());
+                return true;
+            }
+            plugin.getRanksManager().saveRankFromName(args[0], new Rank(
+                    RankType.valueOf(args[1])));
             return true;
         }
-        plugin.getRanksManager().saveRankFromName(args[0], new Rank(
-                RankType.valueOf(args[1])));
-        return true;
+
+        sender.sendMessage("§cSintassi del comando errata!");
+        return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
+        List<String> onlinePlayers = new ArrayList<>();
+        for (Player p: Bukkit.getOnlinePlayers()) onlinePlayers.add(p.getName());
+        return args.length == 1 ? onlinePlayers : args.length == 2 ? new ArrayList<>(
+                Arrays.asList("OWNER", "ADMIN", "MOD", "DEVELOPER", "BUILDER", "BUBU", "MVP", "VIP", "USER")) :
+                new ArrayList<>();
     }
 }

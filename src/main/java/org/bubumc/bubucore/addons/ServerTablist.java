@@ -19,7 +19,8 @@ public class ServerTablist {
     public static void setTablist(final Player player) {
         PacketPlayOutPlayerListHeaderFooter tablistPacket = new PacketPlayOutPlayerListHeaderFooter();
         Object header = new ChatComponentText("\n§d§lBubu§f§lMC §d§lNetwork\n");
-        Object footer = new ChatComponentText("\n                 §fFree §dCandies                 \n");
+        Object footer = new ChatComponentText("\n                 §fFree §dCandies" +
+                "                 \n");
         try {
             Field a = tablistPacket.getClass().getDeclaredField("a");
             a.setAccessible(true);

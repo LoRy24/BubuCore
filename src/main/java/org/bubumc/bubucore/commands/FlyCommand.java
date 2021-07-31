@@ -16,13 +16,14 @@ public class FlyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
         if (!(sender instanceof Player)) return false;
-        if (!sender.hasPermission("fly.use")) {
-            sender.sendMessage("§cNon hai il permesso per usare questo comando!");
-            return false;
+        if (sender.hasPermission("fly.use")) {
+            Player player = (Player) sender;
+            player.sendMessage(!player.getAllowFlight() ? "§7[§a+§7] §aFly Attivata!" :
+                    "§7[§c-§7] §cFly Disattivata!");
+            player.setAllowFlight(!player.getAllowFlight());
+            return true;
         }
-        Player player = (Player) sender;
-        player.sendMessage(!player.getAllowFlight() ? "§7[§a+§7] §aFly Attivata!" : "§7[§c-§7] §cFly Disattivata!");
-        player.setAllowFlight(!player.getAllowFlight());
-        return true;
+        sender.sendMessage("§cNon puoi usare questo comando!");
+        return false;
     }
 }
