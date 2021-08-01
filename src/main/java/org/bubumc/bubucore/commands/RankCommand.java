@@ -36,7 +36,7 @@ public class RankCommand extends CommandListener {
 
         BubuCore plugin = (BubuCore) Bukkit.getPluginManager().getPlugin("BubuCore");
 
-        if (!(args.length == 2)) {
+        if (!(args.length == 1)) {
             if (!plugin.getRanksManager().isSaved(args[0])) {
                 sender.sendMessage("§cGiocatore non trovato!");
                 return;
