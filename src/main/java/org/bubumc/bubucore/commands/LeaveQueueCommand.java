@@ -30,6 +30,7 @@ public class LeaveQueueCommand extends CommandListener {
         }
 
         plugin.getGamesManager().removePlayerFromHisQueue((Player) sender);
+        sender.sendMessage("§aSei uscito dalla queue attuale!");
     }
 
     @Override
