@@ -4,10 +4,7 @@ import com.github.lory24.commandapi.CommandManager;
 import com.github.lory24.commandapi.api.CommandListener;
 import lombok.Getter;
 import org.bubumc.bubucore.addons.ServerTablist;
-import org.bubumc.bubucore.commands.FlyCommand;
-import org.bubumc.bubucore.commands.RankCommand;
-import org.bubumc.bubucore.commands.SetRankGUI;
-import org.bubumc.bubucore.commands.SetSpawn;
+import org.bubumc.bubucore.commands.*;
 import org.bubumc.bubucore.core.games.GamesManager;
 import org.bubumc.bubucore.core.permissions.PermissionsManager;
 import org.bubumc.bubucore.data.SqliteDatabase;
@@ -37,7 +34,8 @@ public final class BubuCore extends JavaPlugin {
         permissionsManager = new PermissionsManager();
 
         final CommandManager commandManager = new CommandManager(this);
-        CommandListener[] listeners = {new FlyCommand(), new RankCommand(), new SetRankGUI(), new SetSpawn()};
+        CommandListener[] listeners = {new FlyCommand(), new RankCommand(), new SetRankGUI(), new SetSpawn(), new PlayUHCCommand(),
+            new LeaveQueueCommand()};
         for (CommandListener cl : listeners) commandManager.registerCommand(cl);
 
         for (Player p: Bukkit.getOnlinePlayers()) {

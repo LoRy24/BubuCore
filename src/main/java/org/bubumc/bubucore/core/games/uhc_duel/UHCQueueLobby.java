@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class UHCQueueLobby extends QueueLobby {
 
     @Getter private final List<Player> inQueuePlayers;
@@ -37,12 +38,16 @@ public class UHCQueueLobby extends QueueLobby {
 
     @Override
     public void addPlayerToQueue(Player player) {
-        if (inQueuePlayers.size() + 1 == maxPlayers) startGame();
         inQueuePlayers.add(player);
+        for (Player p: inQueuePlayers) p.sendMessage("§aGiocatori in queue: " + inQueuePlayers.size() + "/" + maxPlayers);
+        if (inQueuePlayers.size() + 1 == maxPlayers) startGame();
     }
 
     @Override
     public void startGame() {
-
+        plugin.getGamesManager().uhcQueues.remove(this);
+        UHCGame uhcGame = new UHCGame(this.inQueuePlayers);
+        uhcGame.startRound();
+        plugin.getGamesManager().uhcGames.add(uhcGame);
     }
 }

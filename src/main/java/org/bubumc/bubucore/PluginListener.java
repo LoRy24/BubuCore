@@ -22,6 +22,7 @@ public class PluginListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         plugin.getRanksManager().loadRank(event.getPlayer());
         event.setJoinMessage("§7[§a+§7] §a" + event.getPlayer().getName());
+        if (plugin.getConfigValues().getSpawnLocation() != null) event.getPlayer().teleport(plugin.getConfigValues().getSpawnLocation());
         plugin.getPermissionsManager().setPermissionsToPlayer(event.getPlayer(), plugin.getRanksManager().getRanks()
                 .get(event.getPlayer()).getRankPermissions().getPermissions());
         ServerTablist.setTablist(event.getPlayer());
@@ -47,7 +48,10 @@ public class PluginListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent event) {
         event.setQuitMessage("§7[§c-§7] §c" + event.getPlayer().getName());
-        plugin.getGamesManager().removePlayerFromHisQueue(
+        // Games system
+        plugin.getGamesManager()
+                .removePlayerFromHisQueue(event.getPlayer());
+        plugin.getGamesManager().removePlayerFromHisGame(
                 event.getPlayer());
     }
 }

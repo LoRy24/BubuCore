@@ -5,8 +5,6 @@ import com.github.lory24.commandapi.api.annotations.CommandDescription;
 import com.github.lory24.commandapi.api.annotations.CommandName;
 import com.github.lory24.commandapi.api.annotations.CommandPermission;
 import com.github.lory24.commandapi.api.annotations.CommandUsage;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.bubumc.bubucore.BubuCore;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -26,10 +24,15 @@ public class SetSpawn extends CommandListener {
         BubuCore bubuCore = (BubuCore) Bukkit.getPluginManager().getPlugin("BubuCore");
         if (!(sender instanceof Player)) return;
         Player player = (Player) sender;
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        bubuCore.getConfig().set("SpawnLocation", gson.toJson(player.getLocation()));
+
+        bubuCore.getConfig().set("Settings.SpawnLocation.World", player.getLocation().getWorld().getName());
+        bubuCore.getConfig().set("Settings.SpawnLocation.X",     player.getLocation().getX());
+        bubuCore.getConfig().set("Settings.SpawnLocation.Y",     player.getLocation().getY());
+        bubuCore.getConfig().set("Settings.SpawnLocation.Z",     player.getLocation().getZ());
+        bubuCore.getConfig().set("Settings.SpawnLocation.Pitch", player.getLocation().getPitch());
+        bubuCore.getConfig().set("Settings.SpawnLocation.Yaw",   player.getLocation().getYaw());
         bubuCore.saveConfig();
+
         sender.sendMessage("§aSpawn Impostato!");
     }
 
