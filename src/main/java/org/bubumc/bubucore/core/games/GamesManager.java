@@ -1,6 +1,5 @@
 package org.bubumc.bubucore.core.games;
 
-import lombok.Getter;
 import org.bubumc.bubucore.BubuCore;
 import org.bubumc.bubucore.core.games.uhc_duel.UHCQueueLobby;
 import org.bukkit.entity.Player;
@@ -30,6 +29,7 @@ public class GamesManager {
     }
 
     public void removePlayerFromHisQueue(Player player) {
+        if (getPlayerInQueueLobby(player) == null) return;
         getPlayerInQueueLobby(player).removePlayerFromQueue(player);
     }
 }

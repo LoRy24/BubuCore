@@ -1,6 +1,7 @@
 # fly.use
 # rank.set
 # commandblocker.override
+# spawn.set
 
 Settings:
   blocked_commands:
@@ -10,3 +11,7 @@ Settings:
     - minecraft:say
     - tell
     - minecraft:tell
+    - calc
+    - calculate
+    - eval
+    - evaluate

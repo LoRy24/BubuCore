@@ -21,14 +21,14 @@ public class RanksManager {
         if (ranks.containsKey(player)) return;
         if (!isSaved(player.getName())) { registerRank(player, new Rank(RankType.USER));
         } else {
-            RankType type = RankType.valueOf(plugin.getDatabase().getSqlManager().getString("SELECT RankTYPE FROM saved_ranks " +
+            RankType type = RankType.valueOf(plugin.database.getSqlManager().getString("SELECT RankTYPE FROM saved_ranks " +
                     "WHERE PlayerNAME='" + player.getName() + "'", "RankTYPE"));
             this.ranks.put(player, new Rank(type));
         }
     }
 
     public boolean isSaved(String player) {
-        return plugin.getDatabase().getSqlManager().getStringList("SELECT PlayerNAME FROM saved_ranks",
+        return plugin.database.getSqlManager().getStringList("SELECT PlayerNAME FROM saved_ranks",
                 "PlayerNAME").contains(player);
     }
 
@@ -39,16 +39,16 @@ public class RanksManager {
 
     public void saveRankFromName(String player, Rank rank) {
         if (!isSaved(player)) return;
-        plugin.getDatabase().getSqlManager().executeUpdate("UPDATE saved_ranks SET RankTYPE='" + rank.getType() + "' WHERE PlayerNAME='" + player + "'");
+        plugin.database.getSqlManager().executeUpdate("UPDATE saved_ranks SET RankTYPE='" + rank.getType() + "' WHERE PlayerNAME='" + player + "'");
     }
 
     private void initPlayerRank(Player player) {
-        plugin.getDatabase().getSqlManager().executeUpdate("INSERT INTO saved_ranks(PlayerNAME, RankTYPE) VALUES('" +
+        plugin.database.getSqlManager().executeUpdate("INSERT INTO saved_ranks(PlayerNAME, RankTYPE) VALUES('" +
                 player.getName() + "', '" + this.ranks.get(player).getType() + "')");
     }
 
     private void updateRank(Player player) {
-        plugin.getDatabase().getSqlManager().executeUpdate("UPDATE saved_ranks SET RankTYPE='" + this.ranks.get(player).getType() +
+        plugin.database.getSqlManager().executeUpdate("UPDATE saved_ranks SET RankTYPE='" + this.ranks.get(player).getType() +
                 "' WHERE PlayerNAME='" + player.getName() + "'");
     }
 
@@ -60,12 +60,12 @@ public class RanksManager {
     @SuppressWarnings("unused")
     public void unregisterRank(Player player) {
         this.ranks.remove(player);
-        plugin.getDatabase().getSqlManager().executeUpdate("DELETE FROM saved_ranks WHERE PlayerNAME='" +
+        plugin.database.getSqlManager().executeUpdate("DELETE FROM saved_ranks WHERE PlayerNAME='" +
                 player.getName() + "'");
     }
 
     public RankType loadRankType(String playerName) {
-        return RankType.valueOf(plugin.getDatabase().getSqlManager().getString("SELECT RankTYPE FROM saved_ranks WHERE PlayerNAME='" + playerName +
+        return RankType.valueOf(plugin.database.getSqlManager().getString("SELECT RankTYPE FROM saved_ranks WHERE PlayerNAME='" + playerName +
                 "'", "RankTYPE"));
     }
 

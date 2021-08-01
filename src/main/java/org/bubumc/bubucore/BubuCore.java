@@ -1,10 +1,13 @@
 package org.bubumc.bubucore;
 
+import com.github.lory24.commandapi.CommandManager;
+import com.github.lory24.commandapi.api.CommandListener;
 import lombok.Getter;
 import org.bubumc.bubucore.addons.ServerTablist;
 import org.bubumc.bubucore.commands.FlyCommand;
 import org.bubumc.bubucore.commands.RankCommand;
 import org.bubumc.bubucore.commands.SetRankGUI;
+import org.bubumc.bubucore.commands.SetSpawn;
 import org.bubumc.bubucore.core.games.GamesManager;
 import org.bubumc.bubucore.core.permissions.PermissionsManager;
 import org.bubumc.bubucore.data.SqliteDatabase;
@@ -16,7 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 @SuppressWarnings({"SpellCheckingInspection"})
 public final class BubuCore extends JavaPlugin {
 
-    @Getter public SqliteDatabase database;
+    public SqliteDatabase database;
     @Getter private RanksManager ranksManager;
     @Getter private ConfigValues configValues;
     @Getter private PermissionsManager permissionsManager;
@@ -33,10 +36,9 @@ public final class BubuCore extends JavaPlugin {
         ranksManager = new RanksManager();
         permissionsManager = new PermissionsManager();
 
-        this.getCommand("fly").setExecutor(new FlyCommand());
-        this.getCommand("setrank").setExecutor(new RankCommand());
-        this.getCommand("setrank").setTabCompleter(new RankCommand());
-        this.getCommand("setrankgui").setExecutor(new SetRankGUI());
+        final CommandManager commandManager = new CommandManager(this);
+        CommandListener[] listeners = {new FlyCommand(), new RankCommand(), new SetRankGUI(), new SetSpawn()};
+        for (CommandListener cl : listeners) commandManager.registerCommand(cl);
 
         for (Player p: Bukkit.getOnlinePlayers()) {
             ranksManager.loadRank(p);
@@ -46,7 +48,6 @@ public final class BubuCore extends JavaPlugin {
         }
 
         Bukkit.getPluginManager().registerEvents(new PluginListener(), this);
-
         gamesManager = new GamesManager(this);
 
         getLogger().info("Plugin Abilitato!");
