@@ -3,6 +3,3 @@ version: ${project.version}
 main: org.bubumc.bubucore.BubuCore
 api-version: 1.17
 authors: [ LoRy24, GaMMy55, Kurimist ]
-commands:
-  setspawn:
-    description: Set the spawn
