@@ -2,6 +2,7 @@ package org.bubumc.bubucore.core.games.uhc_duel;
 
 import lombok.Setter;
 import org.bubumc.bubucore.BubuCore;
+import org.bubumc.bubucore.addons.InventoryUtils;
 import org.bubumc.bubucore.core.games.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -31,6 +32,7 @@ public class UHCGame extends Game {
         winner.sendMessage("§aHai vinto!");
         loser.sendMessage("§cHai perso! Sei scarso bro ;b");
         plugin.getGamesManager().uhcGames.remove(this);
+        for (Player p: players) InventoryUtils.setHubInventory(p);
         // TODO TELEPORT PLAYERS TO SPAWN
     }
 

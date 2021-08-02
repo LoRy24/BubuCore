@@ -32,7 +32,10 @@ public class UHCQueueLobby extends QueueLobby {
     @Override
     public void removePlayerFromQueue(Player player) {
         if (!this.inQueuePlayers.contains(player)) return;
-        if (this.inQueuePlayers.size() - 1 == 0) plugin.getGamesManager().uhcQueues.remove(this);
+        if (this.inQueuePlayers.size() - 1 == 1) {
+            plugin.getGamesManager().uhcQueues.remove(this);
+            this.inQueuePlayers.clear();
+        }
         this.inQueuePlayers.remove(player);
     }
 
@@ -40,7 +43,7 @@ public class UHCQueueLobby extends QueueLobby {
     public void addPlayerToQueue(Player player) {
         inQueuePlayers.add(player);
         for (Player p: inQueuePlayers) p.sendMessage("§aGiocatori in queue: " + inQueuePlayers.size() + "/" + maxPlayers);
-        if (inQueuePlayers.size() + 1 == maxPlayers) startGame();
+        if (inQueuePlayers.size() == maxPlayers) startGame();
     }
 
     @Override
