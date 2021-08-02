@@ -49,7 +49,7 @@ public class UHCQueueLobby extends QueueLobby {
     @Override
     public void startGame() {
         plugin.getGamesManager().uhcQueues.remove(this);
-        UHCGame uhcGame = new UHCGame(this.inQueuePlayers);
+        UHCGame uhcGame = new UHCGame(this.inQueuePlayers, plugin.getGamesManager().uhcGames.size() + 1);
         uhcGame.startRound();
         plugin.getGamesManager().uhcGames.add(uhcGame);
     }
