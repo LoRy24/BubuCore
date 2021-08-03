@@ -1,6 +1,8 @@
 package org.bubumc.bubucore.core.games;
 
 import org.bubumc.bubucore.BubuCore;
+import org.bubumc.bubucore.core.games.sumo_duel.SumoGame;
+import org.bubumc.bubucore.core.games.sumo_duel.SumoQueueLobby;
 import org.bubumc.bubucore.core.games.uhc_duel.UHCGame;
 import org.bubumc.bubucore.core.games.uhc_duel.UHCQueueLobby;
 import org.bukkit.entity.Player;
@@ -12,9 +14,11 @@ import java.util.List;
 public class GamesManager {
     // queues
     public final List<UHCQueueLobby> uhcQueues;
+    public final List<SumoQueueLobby> sumoQueues;
 
     // games
     public final List<UHCGame> uhcGames;
+    public final List<SumoGame> sumoGames;
 
     private final BubuCore bubuCore;
 
@@ -22,6 +26,8 @@ public class GamesManager {
         this.bubuCore = bubuCore;
         uhcQueues = new ArrayList<>();
         uhcGames = new ArrayList<>();
+        sumoQueues = new ArrayList<>();
+        sumoGames = new ArrayList<>();
     }
 
     public boolean isInActivity(Player player) {
@@ -29,6 +35,10 @@ public class GamesManager {
         for (UHCGame uhcGame: uhcGames) if (uhcGame.isInGame(player)) return true;
         return false;
     }
+
+    // Sumo methods
+
+
 
     // UHC methods
 
@@ -54,6 +64,8 @@ public class GamesManager {
 
     public QueueLobby getPlayerInQueueLobby(Player player) {
         for (UHCQueueLobby queueLobby: uhcQueues) if (queueLobby.isInQueue(player)) return queueLobby;
+        for (SumoQueueLobby queueLobby: sumoQueues)
+            if (queueLobby.isInQueue(player)) return queueLobby;
         return null;
     }
 
@@ -64,6 +76,7 @@ public class GamesManager {
 
     public Game getPlayerInGameGame(Player player) {
         for (UHCGame uhcGame: uhcGames) if (uhcGame.isInGame(player)) return uhcGame;
+        for (SumoGame sumoGame: sumoGames) if (sumoGame.isInGame(player)) return sumoGame;
         return null;
     }
 
